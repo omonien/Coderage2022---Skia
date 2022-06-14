@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{D23127BE-B822-4D18-A85E-65BFB076964A}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Performance.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\VCL\VCL.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Performance">
+        <MSBuild Projects="Performance.dproj"/>
+    </Target>
+    <Target Name="Performance:Clean">
+        <MSBuild Projects="Performance.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Performance:Make">
+        <MSBuild Projects="Performance.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VCL">
+        <MSBuild Projects="..\VCL\VCL.dproj"/>
+    </Target>
+    <Target Name="VCL:Clean">
+        <MSBuild Projects="..\VCL\VCL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VCL:Make">
+        <MSBuild Projects="..\VCL\VCL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Performance;VCL"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Performance:Clean;VCL:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Performance:Make;VCL:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

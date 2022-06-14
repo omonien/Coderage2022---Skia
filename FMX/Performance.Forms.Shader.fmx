@@ -1,0 +1,58 @@
+object FormShader: TFormShader
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object SkAnimatedPaintBox1: TSkAnimatedPaintBox
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    Duration = 100000.000000000000000000
+    OnAnimationDraw = SkAnimatedPaintBox1AnimationDraw
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Lines.Strings = (
+      
+        '// Source: @notargs https://twitter.com/notargs/status/125046864' +
+        '5030858753'
+      ''
+      'uniform float3 iResolution;      // Viewport resolution (pixels)'
+      'uniform float  iTime;            // Shader playback time (s)'
+      
+        'uniform float4 iMouse;           // Mouse drag pos=.xy Click pos' +
+        '=.zw (pixels)'
+      'uniform float3 iImageResolution; // iImage1 resolution (pixels)'
+      'uniform shader iImage1;          // An input image.'
+      ''
+      'float f(vec3 p) {'
+      '    p.z -= iTime * 10.;'
+      '    float a = p.z * .1;'
+      '    p.xy *= mat2(cos(a), sin(a), -sin(a), cos(a));'
+      '    return .1 - length(cos(p.xy) + sin(p.yz));'
+      '}'
+      ''
+      'half4 main(vec2 fragcoord) { '
+      '    vec3 d = .5 - fragcoord.xy1 / iResolution.y;'
+      '    vec3 p=vec3(0);'
+      '    for (int i = 0; i < 32; i++) {'
+      '      p += f(p) * d;'
+      '    }'
+      '    return ((sin(p) + vec3(2, 5, 9)) / length(p)).xyz1;'
+      '}')
+    Position.X = -16.000000000000000000
+    Position.Y = -64.000000000000000000
+    TabOrder = 0
+    Visible = False
+    Viewport.Width = 30.000000000000000000
+    Viewport.Height = 30.000000000000000000
+  end
+end
